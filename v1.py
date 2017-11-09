@@ -24,10 +24,10 @@ def is_admin(email):
     admin = cur.fetchone()
     return admin[0]
 
-def add_user(email, password, name):
+def add_user(email, password, name, admin):
     cur = conn.cursor()
     cur.execute(
-        "INSERT INTO users VALUES ('{}','{}','{}',0)".format(email, password, name)
+        "INSERT INTO users VALUES ('{}','{}','{}',{})".format(email, password, name, admin)
     )
     conn.commit()
 
@@ -52,7 +52,9 @@ def main():
             if is_admin(email):
                 newemail = input("Enter the new user's email address: ")
                 newpass = input("Enter the new user's password: ")
-                new = input("Enter the new user's password: ")
+                newname = input("Enter the new user's name: ")
+                isadmin = input("Enter 1 if the user is an admin, or 0 otherwise: ")
+                add_user(newemail, newpass, newname, isadmin)
             else:
                 print("Only administrators may add new users")
         elif action == 'L':
