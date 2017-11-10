@@ -7,6 +7,11 @@ from tabulate import tabulate
 
 conn = sqlite3.connect('example.db')
 
+def clean_input(s=""):
+    string = input(s)
+    string = string.replace("'", "''")
+    return string
+
 def validate(email, password):
     cur = conn.cursor()
     cur.execute(
@@ -39,20 +44,20 @@ def main():
     logged_in = False
 
     while not logged_in:
-        email = input("Enter your email: ")
-        password = input("Enter your password: ")
+        email = clean_input("Enter your email: ")
+        password = clean_input("Enter your password: ")
         logged_in = validate(email, password)
 
     print("[A]dd new user, [L]ist all users, [W]ho am I, [Q]uit")
 
     while True:
-        action = input("> ")
+        action = clean_input("> ")
         if action == 'A':
             if is_admin(email):
-                newemail = input("Enter the new user's email address: ")
-                newpass = input("Enter the new user's password: ")
-                newname = input("Enter the new user's name: ")
-                isadmin = input("Enter 1 if the user is an admin, or 0 otherwise: ")
+                newemail = clean_input("Enter the new user's email address: ")
+                newpass = clean_input("Enter the new user's password: ")
+                newname = clean_input("Enter the new user's name: ")
+                isadmin = clean_input("Enter 1 if the user is an admin, or 0 otherwise: ")
                 add_user(newemail, newpass, newname, isadmin)
             else:
                 print("Only administrators may add new users")
