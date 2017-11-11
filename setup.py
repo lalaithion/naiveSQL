@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-import sqlite3
+import MySQLdb
 
-conn = sqlite3.connect('example.db')
+conn = MySQLdb.connect(user="hacking", passwd="password", db="ethical")
 
 c = conn.cursor()
 

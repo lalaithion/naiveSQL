@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-import sqlite3
+import MySQLdb
 import readline
 
 from tabulate import tabulate
 
-conn = sqlite3.connect('example.db')
+conn = MySQLdb.connect(user="hacking", passwd="password", db="ethical")
 
 def clean_input(s=""):
     string = input(s)
@@ -15,7 +15,7 @@ def clean_input(s=""):
 def validate(email, password):
     cur = conn.cursor()
     cur.execute(
-        "SELECT name FROM users WHERE email='{}' AND password='{}'".format(email, password)
+        "SELECT name FROM users WHERE email='{}' AND password='{}';".format(email, password)
     )
     name = cur.fetchone() # Returns None if there is nothing
     return name
@@ -23,7 +23,7 @@ def validate(email, password):
 def is_admin(email):
     cur = conn.cursor()
     cur.execute(
-        "SELECT admin FROM users WHERE email='{}'".format(email)
+        "SELECT admin FROM users WHERE email='{}';".format(email)
     )
     admin = cur.fetchone()
     return admin[0]
@@ -31,13 +31,13 @@ def is_admin(email):
 def add_user(email, password, name, admin):
     cur = conn.cursor()
     cur.execute(
-        "INSERT INTO users VALUES ('{}','{}','{}',{})".format(email, password, name, admin)
+        "INSERT INTO users VALUES ('{}','{}','{}',{});".format(email, password, name, admin)
     )
     conn.commit()
 
 def get_users():
     cur = conn.cursor()
-    cur.execute("SELECT email, name FROM users")
+    cur.execute("SELECT email, name FROM users;")
     return cur.fetchall()
 
 def main():
