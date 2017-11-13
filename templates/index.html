@@ -1,0 +1,21 @@
+<html>
+    <head>
+    </head>
+
+    <body>
+        <h1>Welcome to Goggle</h1>
+        <br/>
+        {% if not valid %}
+        <span style="color: red;">Invalid password!</span>
+        {% endif %}
+        <form method="post", action="/login">
+            Username<br>
+            <input type="text" name="username"><br>
+            Password<br>
+            <input type="password" name="password">
+            <br/>
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>
+
