@@ -9,6 +9,7 @@ conn = MySQLdb.connect(user="hacking", passwd="password", db="ethical")
 
 def clean_input(s=""):
     string = input(s)
+    string = string.replace("\\", "\\\\")
     string = string.replace("'", "''")
     return string
 
